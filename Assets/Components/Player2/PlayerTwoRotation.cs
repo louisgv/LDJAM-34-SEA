@@ -27,25 +27,39 @@ public class PlayerTwoRotation : MonoBehaviour {
 
 
 	IEnumerator BeStunned(){
-		myState = PlayerState.STUNNED;
 
-		yield return new WaitForSeconds (3.0f);
+		//sound for on stunned
 
-		myState = PlayerState.PLAYING;
+
+		myState = PlayerState.STUNNED; 
+	
+		if (myState == PlayerState.STUNNED) {
+			
+			yield return new WaitForSeconds (3.0f);
+			GetComponentInParent<AudioSource> ().Play ();
+			Debug.Log ("you have been stunned");
+
+		} else {
+			myState = PlayerState.PLAYING;
+			yield return new WaitForSeconds (3.0f);
+			GetComponentInParent<AudioSource> ().Play ();
+			Debug.Log ("you don't exsist");
+		}
+
+
 	}
 
 
 	void OnTriggerEnter (Collider collider){
 		if (collider.gameObject.tag ==  "Seed") {
-			//here goes the co-routine
+//			here goes the co-routine
 			StartCoroutine(BeStunned());
-
 			GetComponentInParent<AudioSource>().Play();  
+			Debug.Log ("agiain");
+
 		}
 
 			
-
-//		Debug.Log ("intiated song");
 	}
 
 
