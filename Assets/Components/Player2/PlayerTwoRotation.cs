@@ -39,8 +39,12 @@ public class PlayerTwoRotation : MonoBehaviour {
 		if (collider.gameObject.tag ==  "Seed") {
 			//here goes the co-routine
 			StartCoroutine(BeStunned());
+
+			GetComponentInParent<AudioSource>().Play();  
 		}
-//
+
+			
+
 //		Debug.Log ("intiated song");
 	}
 
