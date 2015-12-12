@@ -56,7 +56,7 @@ public class Flower : MonoBehaviour
 		}
 	}
 	
-	void Grow ()
+	protected void Grow ()
 	{
 		if (growthProgress > GROW_MAX) {			
 			BeFullGrown ();
