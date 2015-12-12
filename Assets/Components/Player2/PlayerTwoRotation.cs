@@ -8,11 +8,15 @@ public class PlayerTwoRotation : MonoBehaviour {
 
 	public float timer = 3.0f;
 
+	public AudioSource mySource;
+	public AudioClip[] sounds;
+
+
 	void Start () {
+	mySource = GetComponentInParent<AudioSource>();
+	
 
-	}
-
-
+}
 	public enum PlayerState{
 		PLAYING,
 		STUNNED,
@@ -29,40 +33,34 @@ public class PlayerTwoRotation : MonoBehaviour {
 	IEnumerator BeStunned(){
 
 		//sound for on stunned
-
-
 		myState = PlayerState.STUNNED; 
 	
 		if (myState == PlayerState.STUNNED) {
-			
-			yield return new WaitForSeconds (3.0f);
-			GetComponentInParent<AudioSource> ().Play ();
+			mySource.clip = sounds[1];
+			mySource.Play();
+// 			play audio file of person being stunt
+//			GetComponentInParent<AudioSource>().Play ();
+
+
+	
 			Debug.Log ("you have been stunned");
 
 		} else {
-			myState = PlayerState.PLAYING;
+			//sound for player playing again?
 			yield return new WaitForSeconds (3.0f);
-			GetComponentInParent<AudioSource> ().Play ();
-			Debug.Log ("you don't exsist");
+			myState = PlayerState.PLAYING;
+//			GetComponentInParent<AudioSource> ().Play ();
+//			Debug.Log ("you don't exsist");
 		}
-
-
 	}
-
-
 	void OnTriggerEnter (Collider collider){
 		if (collider.gameObject.tag ==  "Seed") {
 //			here goes the co-routine
-			StartCoroutine(BeStunned());
-			GetComponentInParent<AudioSource>().Play();  
+			StartCoroutine(BeStunned());  
 			Debug.Log ("agiain");
 
 		}
-
-			
 	}
-
-
 
 	// Update is called once per frame
 	void Update () {
