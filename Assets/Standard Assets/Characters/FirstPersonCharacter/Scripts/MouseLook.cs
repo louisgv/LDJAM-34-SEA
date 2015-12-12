@@ -7,6 +7,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
+		
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
         public bool clampVerticalRotation = true;
@@ -15,6 +16,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool smooth;
         public float smoothTime = 5f;
 
+		public int myState;
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
@@ -24,6 +26,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
+
         }
 
 
