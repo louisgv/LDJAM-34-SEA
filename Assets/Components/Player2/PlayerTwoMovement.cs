@@ -17,8 +17,6 @@ public class PlayerTwoMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		Debug.Log (Input.GetAxis("Horizontal"));
-		Debug.Log(Time.smoothDeltaTime);
 		transform.Translate(Vector3.right *  Input.GetAxis("Horizontal") * Time.smoothDeltaTime * speed);
 		transform.Translate(Vector3.forward *  Input.GetAxis("Vertical") *  speed * Time.smoothDeltaTime);
 			
