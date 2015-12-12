@@ -8,6 +8,11 @@ public class PlayerTwoRotation : MonoBehaviour {
 
 	public float timer = 3.0f;
 
+	void Start () {
+
+	}
+
+
 	public enum PlayerState{
 		PLAYING,
 		STUNNED,
@@ -19,15 +24,7 @@ public class PlayerTwoRotation : MonoBehaviour {
 	public PlayerState myState = PlayerState.PLAYING;
 
 	// Use this for initialization
-	void Start () {
-	
-	}
-	void OnTriggerEnter (Collider collider){
-		if (collider.gameObject.tag ==  "Seed") {
-			//here goes the co-routine
-			StartCoroutine(BeStunned());
-		}
-	}
+
 
 	IEnumerator BeStunned(){
 		myState = PlayerState.STUNNED;
@@ -36,7 +33,17 @@ public class PlayerTwoRotation : MonoBehaviour {
 
 		myState = PlayerState.PLAYING;
 	}
-	
+
+
+	void OnTriggerEnter (Collider collider){
+		if (collider.gameObject.tag ==  "Seed") {
+			//here goes the co-routine
+			StartCoroutine(BeStunned());
+		}
+	}
+
+
+
 	// Update is called once per frame
 	void Update () {
 		transform.Rotate (new Vector3 (
