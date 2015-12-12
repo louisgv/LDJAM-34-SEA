@@ -40,6 +40,8 @@ public class PlayerTwoRotation : MonoBehaviour {
 			//here goes the co-routine
 			StartCoroutine(BeStunned());
 		}
+//
+//		Debug.Log ("intiated song");
 	}
 
 
