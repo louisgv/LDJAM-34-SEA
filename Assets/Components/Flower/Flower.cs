@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Flower : MonoBehaviour
 {
-	[Range(18,90)]
+	[Range(99,450)]
 	public float
 		GROW_MAX = 99;
 
@@ -24,12 +24,10 @@ public class Flower : MonoBehaviour
 	
 	public FlowerState state = FlowerState.IS_GROWING;
 	
-	// Rough Implementation for now
-	private Bridge CentralBridge;
-	
-	void Awake ()
+	// Use this for initialization
+	void Start ()
 	{
-		CentralBridge = GameObject.FindGameObjectWithTag ("Bridge").GetComponent<Bridge> ();
+		
 	}
 	
 	void BeFullGrown ()
@@ -44,15 +42,22 @@ public class Flower : MonoBehaviour
 		state = FlowerState.CHOPPED_DEAD;
 		// TODO: Call the building bridge method, could be a static method.
 		if (growthProgress == growthForBridge) {
-			CentralBridge.BuildBridge ();
+			Bridge.BuildBridge ();
 		}
 	}
 	
-	protected void Grow ()
+	// Update is called once per frame
+	void Update ()
 	{
-		if (growthProgress > GROW_MAX) {
+		if (state.Equals (FlowerState.IS_GROWING)) {
+			Grow ();
+		}
+	}
+	
+	void Grow ()
+	{
+		if (growthProgress == GROW_MAX) {
 			BeFullGrown ();
-			return;
 		}
 		growthProgress += Time.deltaTime * growthSpeed;
 	}
