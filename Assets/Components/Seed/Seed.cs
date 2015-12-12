@@ -5,6 +5,8 @@ public class Seed : MonoBehaviour
 {
 	public GameObject flowerPrefab;
 	
+	public Transform flowerParent;
+	
 	public void OnTriggerEnter (Collider other)
 	{
 		if (other.CompareTag ("P2")) {
@@ -17,7 +19,7 @@ public class Seed : MonoBehaviour
 				Instantiate (flowerPrefab, transform.position, Quaternion.identity) as GameObject;
 			
 			// SET PARENT
-//			flowerInstance.transform.SetParent ();
+			flowerInstance.transform.SetParent (flowerParent);
 			Destroy (this.gameObject);
 		}
 	}

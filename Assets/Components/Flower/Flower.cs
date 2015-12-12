@@ -28,7 +28,6 @@ public class Flower : MonoBehaviour
 	
 	void Start ()
 	{
-		
 		CentralBridge = GameObject.FindGameObjectWithTag ("Bridge").GetComponent<Bridge> ();
 	}
 	
