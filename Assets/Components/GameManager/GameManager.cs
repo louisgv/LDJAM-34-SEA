@@ -5,13 +5,14 @@ public class GameManager : MonoBehaviour
 {
 
 	public static GameManager instance = null;
-	
+
 	public enum GameState
 	{
-		GAMEOVER,
+		GAMEOVER_W1,
+		GAMEOVER_W2,
 		GAMEON
 	}
-	
+
 	public static GameState state = GameState.GAMEON;
 	// Use this for initialization
 	void Awake ()
@@ -26,18 +27,29 @@ public class GameManager : MonoBehaviour
 	
 	public static void ToGameOver (int winner)
 	{
-		state = GameState.GAMEOVER;
-		// SHOW WINNER APPROPIRATELY	
+		switch (winner) 
+		{
+		case 1: 
+			state = GameState.GAMEOVER_W1;
+			break;
+		case 2: 
+			state = GameState.GAMEOVER_W2;
+			break;
+		default :
+			return;
+		}
+
 	}
-	
+
 	public static void Restart ()
 	{
 		Application.LoadLevel (Application.loadedLevel);
 	}
-	
 	public void Update ()
 	{
-		if (state == GameState.GAMEOVER) {
+		if (
+			state.Equals(GameState.GAMEOVER_W1) || 
+			state.Equals(GameState.GAMEOVER_W2)) {
 			Time.timeScale = 0.0f;
 		}
 		if (Input.GetKeyDown (KeyCode.L)) {
