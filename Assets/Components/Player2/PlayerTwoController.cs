@@ -12,9 +12,21 @@ public class PlayerTwoController : MonoBehaviour
 	public float
 		movementSpeed = 9.0f;
 
+
+
+
+	 
+	void Start() 
+
+		{
+		
+	}
+
+
 	// Update is called once per frame
 	void Update ()
 	{
+		
 		Vector3 input = new Vector3 (
 			0, 
 			Input.GetAxis ("P2Horizontal"), 
