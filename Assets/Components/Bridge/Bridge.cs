@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public class Bridge : MonoBehaviour
 {
+
 	public GameObject piecePrefab;
 	
 	public GameObject[] pieceInstances;
@@ -32,8 +33,9 @@ public class Bridge : MonoBehaviour
 	public void BuildBridge ()
 	{
 		if (buildProgress == BUILD_MAX) {
-			// TODO GAMEOVER, Player 2 won
-			
+
+			GameManager.ToGameOver (2);
+
 			return;
 		}
 		// NOTE: Change the Forward Vector to whatever direction for future reference
@@ -43,5 +45,12 @@ public class Bridge : MonoBehaviour
 			transform.rotation) as GameObject;
 		
 		pieceInstances [buildProgress++].transform.SetParent (transform);
+	}
+
+	void Update(){
+//		if (state.Equals (BridgeState.FINISHED)) {
+//			GameManager.ToGameOver (2);
+//
+//		}
 	}
 }
