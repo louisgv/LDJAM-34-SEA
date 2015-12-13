@@ -38,13 +38,14 @@ public class Flower : MonoBehaviour
 		// ANIMATION with Flower full bloom
 	}
 	
-	void BeChoppedDead ()
+	public void BeChoppedDead ()
 	{
 		state = FlowerState.CHOPPED_DEAD;
 		// TODO: Call the building bridge method, could be a static method.
 		if (growthProgress > growthForBridge) {
 			CentralBridge.BuildBridge ();
 		}
+		Destroy (this.gameObject);
 	}
 	
 	// Update is called once per frame
