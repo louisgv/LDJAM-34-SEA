@@ -103,8 +103,8 @@ public class PlayerTwoEvents : MonoBehaviour
 		anim.SetTrigger ("SwingAxe");
 		yield return new WaitForSeconds (0.6f);
 		GamePad.SetVibration (0, 1, 1);
+	
 		if (nearbyFlower != null) {
-		
 			
 			sJoint.connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
 			
@@ -143,7 +143,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			
 			break;
 		case PlayerState.PLAYING:
-			//GamePad.SetVibration (0, 0, 0);
+			GamePad.SetVibration (0, 0, 0);
 			break;
 		default:
 			
