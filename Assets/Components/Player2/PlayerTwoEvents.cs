@@ -118,7 +118,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			GamePad.SetVibration (0, Input.GetAxis ("P2.Vertical"), Input.GetAxis ("P2.Vertical"));
 			break;
 		case PlayerState.PLAYING:
-			GamePad.SetVibration (0, 0, 0);
+			//GamePad.SetVibration (0, 0, 0);
 			break;
 		default:
 			
