@@ -18,30 +18,14 @@ public class PlayerTwoController : MonoBehaviour
 		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
 	}
 
-
-
-
-	 
-	void Start() 
-
-		{
-		
-	}
-
-
 	// Update is called once per frame
 	void Update ()
 	{
 		
-		Vector3 input = new Vector3 (
-			0, 
-			Input.GetAxis ("P2Horizontal"), 
-			0);
-	
-		transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
 		if (!playerTwoEvents.state.Equals (PlayerTwoEvents.PlayerState.STUNNED)) {
+			Vector3 input = new Vector3 (0, Input.GetAxis ("P2.Horizontal"), 0);
 			transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
-
+		
 			transform.position -= (
 				transform.forward * 
 				Input.GetAxis ("P2.Vertical") * 
