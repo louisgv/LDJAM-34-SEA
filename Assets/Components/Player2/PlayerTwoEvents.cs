@@ -6,6 +6,8 @@ public class PlayerTwoEvents : MonoBehaviour
 {
 	public Transform actionIndicator;
 	
+	private Animator anim;
+	
 	public float timer = 3.0f;
 	
 	public enum PlayerState
@@ -16,6 +18,12 @@ public class PlayerTwoEvents : MonoBehaviour
 		DRAGGING,
 		STUNNED,
 		DEAD
+	}
+	
+	public void Awake ()
+	{
+		anim = GetComponent<Animator> ();
+		
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -80,6 +88,18 @@ public class PlayerTwoEvents : MonoBehaviour
 		}
 	}
 	
+	IEnumerator SwingAxe ()
+	{
+		anim.SetTrigger ("SwingAxe");
+		yield return new WaitForSeconds (0.4f);
+		GamePad.SetVibration (0, 1, 1);
+		yield return new WaitForSeconds (1.0f);
+		if (nearbyFlower != null) {
+			nearbyFlower.GetComponent<Flower> ().BeChoppedDead ();
+		}
+		state = PlayerState.PLAYING;
+	}
+		
 	void Update ()
 	{
 		ShowIndicator ();
@@ -89,10 +109,9 @@ public class PlayerTwoEvents : MonoBehaviour
 			break;
 		case PlayerState.NEAR_FLOWER:
 			if (Input.GetButtonDown ("P2.Fire")) {
-				//Vibrate here is fine. We will do it later on with an axe prefab
-				GamePad.SetVibration (0, 1, 1);
-				nearbyFlower.GetComponent<Flower> ().BeChoppedDead ();
-				StartCoroutine (CoolDown (0.5f));
+				// Vibrate here is fine. We will do it later on with an axe prefab
+				//	GamePad.SetVibration (0, 1, 1);
+				StartCoroutine (SwingAxe ());
 			}
 			break;
 		case PlayerState.DRAGGING:
@@ -105,13 +124,6 @@ public class PlayerTwoEvents : MonoBehaviour
 			
 			return;
 		}
-	}
-	
-	IEnumerator CoolDown (float seconds)
-	{
-		yield return new WaitForSeconds (seconds);
-		state = PlayerState.PLAYING;
-	}
-	
+	}	
 }
 
