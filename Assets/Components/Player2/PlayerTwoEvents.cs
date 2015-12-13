@@ -11,6 +11,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		PLAYING,
 		NEARFLOWER,
+		DRAGGING,
 		STUNNED,
 		DEAD
 	}
@@ -67,11 +68,12 @@ public class PlayerTwoEvents : MonoBehaviour
 		ShowIndicator ();
 		switch (myState) {
 		case PlayerState.NEARFLOWER:
-			if (Input.GetButtonDown ("P2Fire")) {
+			if (Input.GetButtonDown ("P2.Fire")) {
 				nearByFlower.BeChoppedDead ();
 				myState = PlayerState.PLAYING;
 			}
 			break;
+			
 		default:
 			
 			return;

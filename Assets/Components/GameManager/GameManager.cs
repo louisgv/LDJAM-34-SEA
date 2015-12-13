@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public static void Restart ()
+	{
+		Application.LoadLevel (Application.loadedLevel);
+	}
 	public void Update ()
 	{
 		if (
@@ -49,7 +53,7 @@ public class GameManager : MonoBehaviour
 			Time.timeScale = 0.0f;
 		}
 		if (Input.GetKeyDown (KeyCode.L)) {
-			Application.LoadLevel (Application.loadedLevel);
+			Restart ();
 		}
 	}
 	

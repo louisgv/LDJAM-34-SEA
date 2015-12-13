@@ -7,6 +7,11 @@ public class Seed : MonoBehaviour
 	
 	public Transform flowerParent;
 	
+	public void Awake ()
+	{
+		flowerParent = GameObject.FindGameObjectWithTag ("Ground").transform;
+	}
+	
 	public void OnTriggerEnter (Collider other)
 	{
 		if (other.CompareTag ("P2")) {
@@ -20,6 +25,13 @@ public class Seed : MonoBehaviour
 			
 			// SET PARENT
 			flowerInstance.transform.SetParent (flowerParent);
+			Destroy (this.gameObject);
+		}
+	}
+	
+	public void Update ()
+	{
+		if (transform.position.y < -90) {
 			Destroy (this.gameObject);
 		}
 	}
