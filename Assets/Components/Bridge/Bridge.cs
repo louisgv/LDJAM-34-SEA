@@ -6,7 +6,7 @@ public class Bridge : MonoBehaviour
 {
 	public GameObject piecePrefab;
 	
-	public GameObject[] pieceInstances;
+	private GameObject[] pieceInstances;
 	
 	[Range(3,9)]
 	public static int

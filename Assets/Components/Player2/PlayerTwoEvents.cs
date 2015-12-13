@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 public class PlayerTwoEvents : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	public enum PlayerState
 	{
 		PLAYING,
-		NEARFLOWER,
+		NEAR_FLOWER,
 		DRAGGING,
 		STUNNED,
 		DEAD
@@ -31,7 +32,7 @@ public class PlayerTwoEvents : MonoBehaviour
 		myState = PlayerState.PLAYING;
 	}
 	
-	private FlowerMKI nearByFlower;
+	private GameObject nearbyFlower;
 	
 	void OnTriggerEnter (Collider collider)
 	{
@@ -41,8 +42,8 @@ public class PlayerTwoEvents : MonoBehaviour
 		}
 		if (collider.CompareTag ("Flower")) {
 			// SHOW ACTION INDICATOR
-			myState = PlayerState.NEARFLOWER;
-			nearByFlower = collider.GetComponent<FlowerMKI> ();
+			myState = PlayerState.NEAR_FLOWER;
+			nearbyFlower = collider.gameObject;
 		}
 	}
 	
@@ -56,8 +57,8 @@ public class PlayerTwoEvents : MonoBehaviour
 	
 	void ShowIndicator ()
 	{
-		if (myState.Equals (PlayerState.NEARFLOWER)) {
-			actionIndicator.localPosition = Vector3.up * 2.0f;
+		if (myState.Equals (PlayerState.NEAR_FLOWER)) {
+			actionIndicator.localPosition = Vector3.up * 2.0f - Vector3.forward * 3.0f;
 		} else {
 			actionIndicator.localPosition = Vector3.zero;
 		}
@@ -67,17 +68,31 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		ShowIndicator ();
 		switch (myState) {
-		case PlayerState.NEARFLOWER:
+		case PlayerState.NEAR_FLOWER:
 			if (Input.GetButtonDown ("P2.Fire")) {
-				nearByFlower.BeChoppedDead ();
-				myState = PlayerState.PLAYING;
+				//Vibrate here is fine. We will do it later on with an axe prefab
+				GamePad.SetVibration (0, 1, 1);
+				nearbyFlower.GetComponent<Flower> ().BeChoppedDead ();
+				StartCoroutine (CoolDown (0.5f));
 			}
 			break;
-			
+		case PlayerState.DRAGGING:
+			GamePad.SetVibration (0, Input.GetAxis ("P2Vertical"), Input.GetAxis ("P2Vertical"));
+			break;
+		case PlayerState.PLAYING:
+			GamePad.SetVibration (0, 0, 0);
+			break;
 		default:
 			
 			return;
 		}
 	}
 	
+	IEnumerator CoolDown (float seconds)
+	{
+		yield return new WaitForSeconds (seconds);
+		myState = PlayerState.PLAYING;
+	}
+	
 }
+
