@@ -3,16 +3,15 @@ using System.Collections;
 
 public class PlayerTwoController : MonoBehaviour
 {
-
-	[Range(9.0f, 36.0f)]
+	[Range(0.0f, 45.0f)]
 	public float
-		rotationSpeed = 9.0f;
+		rotationSpeed = 27.0f;
 	
-	[Range(1.0f, 9.0f)]
+	[Range(0.0f, 45.0f)]
 	public float
-		movementSpeed = 9.0f;
+		movementSpeed = 27.0f;
 
-	public PlayerTwoEvents playerTwoEvents;
+	private PlayerTwoEvents playerTwoEvents;
 
 	public void Awake ()
 	{

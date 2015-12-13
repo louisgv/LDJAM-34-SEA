@@ -12,6 +12,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		PLAYING,
 		NEAR_FLOWER,
+		SWING_AXE,
 		DRAGGING,
 		STUNNED,
 		DEAD
