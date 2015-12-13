@@ -3,14 +3,20 @@ using System.Collections;
 
 public class PlayerTwoController : MonoBehaviour
 {
-
-	[Range(9.0f, 36.0f)]
+	[Range(0.0f, 45.0f)]
 	public float
-		rotationSpeed = 9.0f;
+		rotationSpeed = 27.0f;
 	
-	[Range(1.0f, 9.0f)]
+	[Range(0.0f, 45.0f)]
 	public float
-		movementSpeed = 9.0f;
+		movementSpeed = 27.0f;
+
+	private PlayerTwoEvents playerTwoEvents;
+
+	public void Awake ()
+	{
+		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
+	}
 
 
 
@@ -26,17 +32,26 @@ public class PlayerTwoController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+<<<<<<< HEAD
 		
 		Vector3 input = new Vector3 (
 			0, 
 			Input.GetAxis ("P2Horizontal"), 
 			0);
 		transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
+=======
+		if (!playerTwoEvents.state.Equals (PlayerTwoEvents.PlayerState.STUNNED)) {
+			Vector3 input = new Vector3 (0, Input.GetAxis ("P2.Horizontal"), 0);
+			transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
+>>>>>>> 30ca28a89ac11e4d1c2014bcb5b8bb5a3ea5d487
 		
-		transform.position -= (
-			transform.forward * Input.GetAxis ("P2Vertical") 
-			* movementSpeed * Time.smoothDeltaTime);
-
+			transform.position -= (
+				transform.forward * 
+				Input.GetAxis ("P2.Vertical") * 
+				movementSpeed * 
+				Time.smoothDeltaTime
+				);
+		}
 //		transform.rotation = Quaternion.Euler (
 //			transform.rotation.eulerAngles + 
 //			input * Time.smoothDeltaTime * rotationSpeed);
