@@ -19,6 +19,11 @@ public class FlowerMKII : Flower
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
 		}
+		if (state.Equals (FlowerState.CHOPPED)) {
+			// Disable Trigger
+			// Apply a force up
+			// Switch State to Draggable
+		}
 	}
 	
 	new void Grow ()

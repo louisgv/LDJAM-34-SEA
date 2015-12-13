@@ -15,11 +15,12 @@ public class Flower : MonoBehaviour
 	public float
 		growthSpeed = 1f;
 	
-	private Bridge centralBridge;
+	private Rigidbody rigidBody;
 	
 	public enum FlowerState
 	{
 		IS_GROWING,
+		CHOPPED,
 		CHOPPED_DEAD,
 		FULL_GROWN
 	}
@@ -28,14 +29,29 @@ public class Flower : MonoBehaviour
 		
 	void Awake ()
 	{
-		centralBridge = GameObject.FindGameObjectWithTag ("Bridge").GetComponent<Bridge> ();
+		rigidBody = GetComponent<Rigidbody> ();
+	}
+	
+	public void BeChopped ()
+	{
+		if (growthProgress < growthForBridge) {
+			Destroy (this.gameObject);
+			return;
+		}
+		
+		rigidBody.isKinematic = false;
+		
+		rigidBody.AddForce (Vector3.up * 900f);
+		
 	}
 	
 	void BeFullGrown ()
 	{
 		state = FlowerState.FULL_GROWN;
 		// TODO: Game OVER, P1 Win. 
-		// ANIMATION with Flower full bloom
+		// ANIMATION with Flower full bloom. UNCOMMENT THIS FOR WINNER SCENE
+		
+//		GameManager.state = GameManager.GameState.GAMEOVER_W2;
 	}
 	
 	public void BeChoppedDead ()
@@ -43,7 +59,7 @@ public class Flower : MonoBehaviour
 		state = FlowerState.CHOPPED_DEAD;
 		// TODO: Call the building bridge method, could be a static method.
 		if (growthProgress > growthForBridge) {
-			centralBridge.BuildBridge ();
+//			centralBridge.BuildBridge ();
 		}
 		Destroy (this.gameObject);
 	}
@@ -53,6 +69,9 @@ public class Flower : MonoBehaviour
 	{
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
+		}
+		if (transform.position.y < 100.0f) {
+			Destroy (this.gameObject);
 		}
 	}
 	

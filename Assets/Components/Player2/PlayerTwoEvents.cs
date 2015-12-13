@@ -1,5 +1,6 @@
 ﻿ using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using XInputDotNetPure;
 
 public class PlayerTwoEvents : MonoBehaviour
@@ -8,7 +9,11 @@ public class PlayerTwoEvents : MonoBehaviour
 	
 	private Animator anim;
 	
-	private SpringJoint sjoint;
+	private SpringJoint sJoint;
+	
+	public Queue<GameObject> joints;
+	
+	private const int JOINT_COUNT = 3;
 	
 	public float timer = 3.0f;
 	
@@ -26,7 +31,9 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		anim = GetComponent<Animator> ();
 		
-		sjoint = GetComponent<SpringJoint> ();
+		sJoint = GetComponent<SpringJoint> ();
+		
+		joints = new Queue<GameObject> ();
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -96,13 +103,24 @@ public class PlayerTwoEvents : MonoBehaviour
 		anim.SetTrigger ("SwingAxe");
 		yield return new WaitForSeconds (0.6f);
 		GamePad.SetVibration (0, 1, 1);
-		yield return new WaitForSeconds (1.0f);
 		if (nearbyFlower != null) {
 		
-			nearbyFlower.GetComponent<Flower> ().BeChoppedDead ();
 			
+			sJoint.connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
 			
+			nearbyFlower.GetComponent<Flower> ().BeChopped ();
+		
+//			GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
+//			
+//			joint.transform.SetParent (transform);
+//			
+//			joints.Enqueue (joint);
+//			
+//			joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
+//			
+//			nearbyFlower.GetComponent<Flower> ().BeChopped ();
 		}
+		yield return new WaitForSeconds (1.0f);
 		state = PlayerState.PLAYING;
 	}
 		
@@ -122,6 +140,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			break;
 		case PlayerState.DRAGGING:
 			GamePad.SetVibration (0, Input.GetAxis ("P2.Vertical"), Input.GetAxis ("P2.Vertical"));
+			
 			break;
 		case PlayerState.PLAYING:
 			//GamePad.SetVibration (0, 0, 0);
