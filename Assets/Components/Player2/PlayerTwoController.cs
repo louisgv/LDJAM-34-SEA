@@ -12,19 +12,27 @@ public class PlayerTwoController : MonoBehaviour
 	public float
 		movementSpeed = 9.0f;
 
+	public PlayerTwoEvents playerTwoEvents;
+
+	public void Awake ()
+	{
+		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		Vector3 input = new Vector3 (
-			0, 
-			Input.GetAxis ("P2Horizontal"), 
-			0);
-		transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
+		if (!playerTwoEvents.state.Equals (PlayerTwoEvents.PlayerState.STUNNED)) {
+			Vector3 input = new Vector3 (0, Input.GetAxis ("P2.Horizontal"), 0);
+			transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
 		
-		transform.position -= (
-			transform.forward * Input.GetAxis ("P2Vertical") 
-			* movementSpeed * Time.smoothDeltaTime);
-
+			transform.position -= (
+				transform.forward * 
+				Input.GetAxis ("P2.Vertical") * 
+				movementSpeed * 
+				Time.smoothDeltaTime
+				);
+		}
 //		transform.rotation = Quaternion.Euler (
 //			transform.rotation.eulerAngles + 
 //			input * Time.smoothDeltaTime * rotationSpeed);
