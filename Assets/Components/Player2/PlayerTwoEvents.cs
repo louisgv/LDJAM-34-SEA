@@ -8,6 +8,8 @@ public class PlayerTwoEvents : MonoBehaviour
 	
 	private Animator anim;
 	
+	private SpringJoint sjoint;
+	
 	public float timer = 3.0f;
 	
 	public enum PlayerState
@@ -24,6 +26,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		anim = GetComponent<Animator> ();
 		
+		sjoint = GetComponent<SpringJoint> ();
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -91,11 +94,14 @@ public class PlayerTwoEvents : MonoBehaviour
 	IEnumerator SwingAxe ()
 	{
 		anim.SetTrigger ("SwingAxe");
-		yield return new WaitForSeconds (0.4f);
+		yield return new WaitForSeconds (0.6f);
 		GamePad.SetVibration (0, 1, 1);
 		yield return new WaitForSeconds (1.0f);
 		if (nearbyFlower != null) {
+		
 			nearbyFlower.GetComponent<Flower> ().BeChoppedDead ();
+			
+			
 		}
 		state = PlayerState.PLAYING;
 	}
