@@ -9,6 +9,8 @@ public class PlayerTwoSounds : MonoBehaviour
 	public AudioClip[] ouchArray;
 	public AudioClip[] notBadCutting;
 	public AudioClip[] onSuccess;
+	public AudioClip[] taunting;
+
 
 	void Start ()
 	{
@@ -49,5 +51,11 @@ public class PlayerTwoSounds : MonoBehaviour
 		int soundIndex = Random.Range (0, onSuccess.Length);
 		mySource.clip = onSuccess[soundIndex];
 		mySource.Play();	
+	}
+
+	public void tauntingYou() {
+		int soundIndex = Random.Range (0, taunting.Length);
+		mySource.clip = taunting [soundIndex];
+		mySource.Play ();
 	}
 }

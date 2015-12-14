@@ -62,6 +62,10 @@ public class PlayerTwoEvents : MonoBehaviour
 			GamePad.SetVibration (0, 0, 0);
 			yield return new WaitForSeconds (0.3f);
 		}
+		// respawn of player beginning to start playing again. And then laugh
+
+		playertwosounds.tauntingYou();
+		yield return new WaitForSeconds (0.3f);
 		state = PlayerState.PLAYING;
 	}
 
