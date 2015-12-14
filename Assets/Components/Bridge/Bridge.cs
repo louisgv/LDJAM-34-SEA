@@ -7,7 +7,7 @@ public class Bridge : MonoBehaviour
 
 	public GameObject piecePrefab;
 	
-	private GameObject[] pieceInstances;
+	protected GameObject[] pieceInstances;
 	
 	[Range(3,9)]
 	public static int
@@ -47,7 +47,8 @@ public class Bridge : MonoBehaviour
 		pieceInstances [buildProgress++].transform.SetParent (transform);
 	}
 
-	void Update(){
+	void Update ()
+	{
 //		if (state.Equals (BridgeState.FINISHED)) {
 //			GameManager.ToGameOver (2);
 //
