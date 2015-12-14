@@ -90,27 +90,32 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	IEnumerator SwingAxe ()
 	{
-		anim.SetTrigger ("SwingAxe");
-		yield return new WaitForSeconds (0.6f);
-		GamePad.SetVibration (0, 1, 1);
+		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) && Input.GetButtonDown ("P2.Fire")) {
+			
+			anim.SetTrigger ("SwingAxe");
+			yield return new WaitForSeconds (0.6f);
+			GamePad.SetVibration (0, 1, 1);
 	
-		if (nearbyFlower != null && joints.Count <= MAX_JOINT) {
-			GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
+			if (nearbyFlower != null && joints.Count <= MAX_JOINT) {
+				GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
 			
-			joint.transform.SetParent (transform);
+				joint.transform.SetParent (transform);
 			
-			joint.transform.localPosition = Vector3.zero;
+				joint.transform.localPosition = Vector3.zero;
 			
-			joints.Enqueue (joint);
+				joints.Enqueue (joint);
 			
-			joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
+				joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
 			
-			joint.GetComponent<Rigidbody> ().isKinematic = true;
+				joint.GetComponent<Rigidbody> ().isKinematic = true;
 			
-			nearbyFlower.BeChopped ();
+				nearbyFlower.BeChopped ();
+			}
+			yield return new WaitForSeconds (1.0f);
+			state = PlayerState.PLAYING;
+		} else {
+			yield return new WaitForFixedUpdate ();
 		}
-		yield return new WaitForSeconds (1.0f);
-		state = PlayerState.PLAYING;
 	}
 
 	public int playerIndex = 2;
@@ -123,28 +128,36 @@ public class PlayerTwoEvents : MonoBehaviour
 				anim.SetBool ("BuildBridge", true);
 				if (Input.GetButtonDown ("P2.Fire")) {
 					nearbyRamp.BuildBridge ();
+					GameObject joint = joints.Dequeue ();
+					Destroy (joint.GetComponent<SpringJoint> ().connectedBody.gameObject);
+					Destroy (joint);
+					anim.SetBool ("BuildBridge", false);
 				}
 			}
 			break;
 		case PlayerState.STUNNED:
 			break;
 		case PlayerState.NEAR_FLOWER:
-			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) && Input.GetButtonDown ("P2.Fire")) {
 				// Vibrate here is fine. We will do it later on with an axe prefab
 				//	GamePad.SetVibration (0, 1, 1);
-				StartCoroutine (SwingAxe ());
-			}
+			StartCoroutine (SwingAxe ());
+			
 			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
 				anim.SetBool ("NearFlower", true);
 			}
 			break;
 		case PlayerState.DRAGGING:
-			GamePad.SetVibration (0, Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical"), Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical"));
+			GamePad.SetVibration (
+				0, Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical"),
+				Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical")
+			);
 			
 			break;
 		case PlayerState.PLAYING:
+		
+			nearbyFlower = null;
 			GamePad.SetVibration (0, 0, 0);
-			
+			anim.SetBool ("BuildBridge", false);
 			anim.SetBool ("NearFlower", false);
 			break;
 		default:
