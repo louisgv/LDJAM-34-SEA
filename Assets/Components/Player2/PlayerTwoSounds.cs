@@ -13,6 +13,10 @@ public class PlayerTwoSounds : MonoBehaviour
 	public AudioClip[] swingHit;
 	public AudioClip[] swingMiss;
 	public AudioClip[] slingNoise;
+	public AudioClip[] footStepsGround;
+	public AudioClip[] footStepsWater;
+	public AudioClip[] footStepsWood;
+
 
 void Start ()
 	{
@@ -79,6 +83,25 @@ void Start ()
 	public void slingShot() 
 	{
 		mySource.clip = slingNoise [0];
+		mySource.Play ();
+	}
+
+	public void walkingGround() 
+	{
+		mySource.clip = footStepsGround [0];
+		mySource.Play ();
+	}
+
+
+	public void walkingWater() 
+	{
+		mySource.clip = footStepsWater [0];
+		mySource.Play ();
+	}
+
+	public void walkingWood() 
+	{
+		mySource.clip = footStepsWood [0];
 		mySource.Play ();
 	}
 
