@@ -32,7 +32,8 @@ public class PlayerTwoEvents : MonoBehaviour
 	//reffering to our enum PlayState value Playing
 	//type of myState is PlayerState.playing
 	public PlayerState state = PlayerState.PLAYING;
-	
+
+
 	// Use this for initialization
 	
 	IEnumerator BeStunned ()
