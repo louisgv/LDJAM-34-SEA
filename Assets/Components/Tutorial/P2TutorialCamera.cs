@@ -3,7 +3,7 @@ using System.Collections;
 
 public class  P2TutorialCamera : MonoBehaviour {
 
-	// Use this for initialization
+	// Use3 this for initialization
 
 //	public GameObject P1;
 
