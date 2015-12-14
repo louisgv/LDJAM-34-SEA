@@ -11,7 +11,7 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	public Queue<GameObject> joints;
 	
-	private const int JOINT_COUNT = 3;
+	public int MAX_JOINT = 3;
 	
 	public float timer = 3.0f;
 
@@ -19,6 +19,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		PLAYING,
 		NEAR_FLOWER,
+		NEAR_RAMP,
 		SWING_AXE,
 		DRAGGING,
 		STUNNED,
@@ -55,7 +56,8 @@ public class PlayerTwoEvents : MonoBehaviour
 	}
 
 	private Flower nearbyFlower;
-
+	private BridgeMKII nearbyRamp;
+	
 	void OnTriggerEnter (Collider collider)
 	{
 		if (collider.CompareTag ("Seed")) {
@@ -68,12 +70,20 @@ public class PlayerTwoEvents : MonoBehaviour
 			state = PlayerState.NEAR_FLOWER;
 			nearbyFlower = collider.gameObject.GetComponent<Flower> ();
 		}
+		if (collider.CompareTag ("Ramp")) {
+			state = PlayerState.NEAR_RAMP;
+			nearbyRamp = collider.gameObject.GetComponent<BridgeMKII> ();
+		}
 	}
 
 	void OnTriggerExit (Collider collider)
 	{
 		if (collider.CompareTag ("Flower")) {
 			nearbyFlower = null;
+			state = PlayerState.PLAYING;
+		}
+		if (collider.CompareTag ("Ramp")) {
+			nearbyRamp = null;
 			state = PlayerState.PLAYING;
 		}
 	}
@@ -84,7 +94,7 @@ public class PlayerTwoEvents : MonoBehaviour
 		yield return new WaitForSeconds (0.6f);
 		GamePad.SetVibration (0, 1, 1);
 	
-		if (nearbyFlower != null) {
+		if (nearbyFlower != null && joints.Count <= MAX_JOINT) {
 			GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
 			
 			joint.transform.SetParent (transform);
@@ -108,6 +118,14 @@ public class PlayerTwoEvents : MonoBehaviour
 	void Update ()
 	{		
 		switch (state) {
+		case PlayerState.NEAR_RAMP:
+			if (joints.Count > 0) {
+				anim.SetBool ("BuildBridge", true);
+				if (Input.GetButtonDown ("P2.Fire")) {
+					nearbyRamp.BuildBridge ();
+				}
+			}
+			break;
 		case PlayerState.STUNNED:
 			break;
 		case PlayerState.NEAR_FLOWER:

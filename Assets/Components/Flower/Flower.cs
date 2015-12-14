@@ -17,7 +17,7 @@ public class Flower : MonoBehaviour
 	
 	private Rigidbody rigidBody;
 	
-	private BoxCollider collider;
+	private BoxCollider bCollider;
 	
 	public enum FlowerState
 	{
@@ -32,7 +32,7 @@ public class Flower : MonoBehaviour
 	void Awake ()
 	{
 		rigidBody = GetComponent<Rigidbody> ();
-		collider = GetComponent<BoxCollider> ();
+		bCollider = GetComponent<BoxCollider> ();
 	}
 	
 	public void BeChopped ()
@@ -45,7 +45,7 @@ public class Flower : MonoBehaviour
 			
 		rigidBody.isKinematic = false;
 		
-		collider.isTrigger = false;
+		bCollider.isTrigger = false;
 		
 		rigidBody.AddForce (Vector3.up * 1800f);
 		
