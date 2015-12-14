@@ -8,9 +8,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	public Transform actionIndicator;
 	
 	private Animator anim;
-	
-	private SpringJoint sJoint;
-	
+
 	public Queue<GameObject> joints;
 	
 	private const int JOINT_COUNT = 3;
@@ -31,9 +29,8 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		anim = GetComponent<Animator> ();
 		
-		sJoint = GetComponent<SpringJoint> ();
-		
 		joints = new Queue<GameObject> ();
+
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -56,7 +53,7 @@ public class PlayerTwoEvents : MonoBehaviour
 		state = PlayerState.PLAYING;
 	}
 	
-	private GameObject nearbyFlower;
+	private Flower nearbyFlower;
 	
 	void OnTriggerEnter (Collider collider)
 	{
@@ -68,23 +65,24 @@ public class PlayerTwoEvents : MonoBehaviour
 		if (collider.CompareTag ("Flower")) {
 			// SHOW ACTION INDICATOR
 			state = PlayerState.NEAR_FLOWER;
-			nearbyFlower = collider.gameObject;
+			nearbyFlower = collider.gameObject.GetComponent<Flower> ();
 		}
 	}
 	
 	void OnTriggerExit (Collider collider)
 	{
 		if (collider.CompareTag ("Flower")) {
-			// SHOW ACTION INDICATOR
+			nearbyFlower = null;
 			state = PlayerState.PLAYING;
 		}
 	}
 	
 	void ShowIndicator ()
 	{
-		if (state.Equals (PlayerState.NEAR_FLOWER)) {
+		if (state.Equals (PlayerState.NEAR_FLOWER) && 
+			!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
 			actionIndicator.localPosition = Vector3.Lerp (
-				actionIndicator.localPosition, 
+				actionIndicator.localPosition,
 				Vector3.up * 2.0f - Vector3.forward * 3.0f,
 				Time.deltaTime * 10.0f);
 		} else {
@@ -105,20 +103,19 @@ public class PlayerTwoEvents : MonoBehaviour
 		GamePad.SetVibration (0, 1, 1);
 	
 		if (nearbyFlower != null) {
+			GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
 			
-			sJoint.connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
+			joint.transform.SetParent (transform);
 			
-			nearbyFlower.GetComponent<Flower> ().BeChopped ();
-		
-//			GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
-//			
-//			joint.transform.SetParent (transform);
-//			
-//			joints.Enqueue (joint);
-//			
-//			joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
-//			
-//			nearbyFlower.GetComponent<Flower> ().BeChopped ();
+			joint.transform.localPosition = Vector3.zero;
+			
+			joints.Enqueue (joint);
+			
+			joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
+			
+			joint.GetComponent<Rigidbody> ().isKinematic = true;
+			
+			nearbyFlower.BeChopped ();
 		}
 		yield return new WaitForSeconds (1.0f);
 		state = PlayerState.PLAYING;
@@ -132,7 +129,7 @@ public class PlayerTwoEvents : MonoBehaviour
 		case PlayerState.STUNNED:
 			break;
 		case PlayerState.NEAR_FLOWER:
-			if (Input.GetButtonDown ("P2.Fire")) {
+			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) && Input.GetButtonDown ("P2.Fire")) {
 				// Vibrate here is fine. We will do it later on with an axe prefab
 				//	GamePad.SetVibration (0, 1, 1);
 				StartCoroutine (SwingAxe ());

@@ -17,6 +17,8 @@ public class Flower : MonoBehaviour
 	
 	private Rigidbody rigidBody;
 	
+	private BoxCollider collider;
+	
 	public enum FlowerState
 	{
 		IS_GROWING,
@@ -30,6 +32,7 @@ public class Flower : MonoBehaviour
 	void Awake ()
 	{
 		rigidBody = GetComponent<Rigidbody> ();
+		collider = GetComponent<BoxCollider> ();
 	}
 	
 	public void BeChopped ()
@@ -38,11 +41,15 @@ public class Flower : MonoBehaviour
 			Destroy (this.gameObject);
 			return;
 		}
-		
+	
+			
 		rigidBody.isKinematic = false;
 		
-		rigidBody.AddForce (Vector3.up * 900f);
+		collider.isTrigger = false;
 		
+		rigidBody.AddForce (Vector3.up * 1800f);
+		
+		state = FlowerState.CHOPPED;
 	}
 	
 	void BeFullGrown ()
