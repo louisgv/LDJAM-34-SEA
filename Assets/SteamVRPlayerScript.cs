@@ -62,14 +62,29 @@ public class SteamVRPlayerScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+		// TODO: REPLACE THIS WITH PUBLIC UNITY OBJECT
+		LineRenderer rubber = gameObject.AddComponent<LineRenderer> ();
+
+		rubber.material = new Material (Shader.Find ("Particles/Additive"));
+
+		rubber.SetWidth (0.005F, 0.005F);
+
+		rubber.SetColors (Color.black, Color.black);
+
+		rubber.SetVertexCount (3);
+
+		rubber.SetPosition (0, slingPoint1.position);
+		rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+		rubber.SetPosition (2, slingPoint2.position);
 	}
 
 	public Transform point, pointer;
 
-	[Range(2500f, 9000f)]
+	public Transform slingPoint1, slingPoint2;
+
+	[Range (2500f, 9000f)]
 	public float
-		shootPower = 2500f; 
+		shootPower = 2500f;
 	// Update is called once per frame
 	void Update ()
 	{
@@ -85,13 +100,22 @@ public class SteamVRPlayerScript : MonoBehaviour
 					Debug.Log ("axis: " + axis);
 				}
 			}*/
-
+		
+		LineRenderer rubber = GetComponent<LineRenderer> ();
 		if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPressDown (EVRButtonId.k_EButton_Axis0)) {
+
 			newSeed = (GameObject)GameObject.Instantiate (seedPrefab, controllerLeftSlingshot.transform.position, Quaternion.identity);
+
 			newSeed.GetComponent<Rigidbody> ().isKinematic = true;
+
 			Debug.Log ("B1" + " touch down" + SteamVR_Controller.Input (0).transform.pos.ToString ());
 		} else if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPress (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
+
 			newSeed.transform.position = controllerRightLoader.transform.position;
+			// Link the RUBBER BAND TOGETHER WITH THE Seed HERE, with the SEED's WIDTH? HACK: LOOK UP Start()
+			// Link SlingPoint1's position with newSeed's position with SlingPOint2's position
+
+			rubber.SetPosition (1, newSeed.transform.position); 
 		} else if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPressUp (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
 			//* if time alive less than 1 second detroy.
 			if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
@@ -99,13 +123,13 @@ public class SteamVRPlayerScript : MonoBehaviour
 			} else {
 				newSeed.GetComponent<Rigidbody> ().isKinematic = false;
 				newSeed.GetComponent<Rigidbody> ().AddForce ((
-					controllerLeftSlingshot.transform.position - 
-					controllerRightLoader.transform.position + nudgeVector) 
-					* shootPower);
+				    controllerLeftSlingshot.transform.position -
+				    controllerRightLoader.transform.position + nudgeVector)
+				* shootPower);
 				
 				newSeed = null;
 			}
-
+			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
 		} else if (newSeed != null) {
 			//* if time alive less than 1 second detroy.
 			if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
@@ -113,14 +137,18 @@ public class SteamVRPlayerScript : MonoBehaviour
 			} else {
 				newSeed.GetComponent<Rigidbody> ().isKinematic = false;
 				newSeed.GetComponent<Rigidbody> ().AddForce ((
-					controllerLeftSlingshot.transform.position - 
-					controllerRightLoader.transform.position + nudgeVector) 
-					* shootPower
+				    controllerLeftSlingshot.transform.position -
+				    controllerRightLoader.transform.position + nudgeVector)
+				* shootPower
 				);
 				newSeed = null;
 			}
-
+			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+		} else {
+			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
 		}
+		rubber.SetPosition (0, slingPoint1.position);
+		rubber.SetPosition (2, slingPoint2.position);
 		//}
 	}
 }

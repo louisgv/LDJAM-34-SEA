@@ -23,7 +23,7 @@ public class FlowerMKII : Flower
 			// Disable Trigger
 			// Apply a force up
 			// Switch State to Draggable
-			gameObject.layer = 8;
+
 		}
 	}
 

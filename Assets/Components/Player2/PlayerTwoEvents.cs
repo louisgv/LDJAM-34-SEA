@@ -15,7 +15,10 @@ public class PlayerTwoEvents : MonoBehaviour
 	
 	public float timer = 3.0f;
 
+
+
 	public enum PlayerState
+
 	{
 		PLAYING,
 		NEAR_FLOWER,
@@ -26,8 +29,14 @@ public class PlayerTwoEvents : MonoBehaviour
 		DEAD
 	}
 
+	private PlayerTwoSounds playertwosounds;
+
 	public void Awake ()
+
 	{
+	
+		playertwosounds = GetComponent<PlayerTwoSounds> ();
+
 		anim = GetComponent<Animator> ();
 		
 		joints = new Queue<GameObject> ();
@@ -48,16 +57,21 @@ public class PlayerTwoEvents : MonoBehaviour
 		for (int i = 0; i < 3; ++i) {
 			GamePad.SetVibration (0, 1, 1);
 			yield return new WaitForSeconds (0.5f);
-		
+			playertwosounds.GettingHit();
+
 			GamePad.SetVibration (0, 0, 0);
 			yield return new WaitForSeconds (0.3f);
 		}
+		// respawn of player beginning to start playing again. And then laugh
+		//player will start playing with sound
+		playertwosounds.tauntingYou();
+		yield return new WaitForSeconds (0.3f);
 		state = PlayerState.PLAYING;
 	}
 
 	private Flower nearbyFlower;
 	private BridgeMKII nearbyRamp;
-	
+
 	void OnTriggerEnter (Collider collider)
 	{
 		if (collider.CompareTag ("Seed")) {
@@ -90,7 +104,9 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	IEnumerator SwingAxe ()
 	{
-		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) && Input.GetButtonDown ("P2.Fire")) {
+		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) &&
+		    !nearbyFlower.state.Equals (Flower.FlowerState.INVICIBLE) &&
+		    Input.GetButtonDown ("P2.Fire")) {
 			
 			anim.SetTrigger ("SwingAxe");
 			yield return new WaitForSeconds (0.6f);
@@ -142,7 +158,8 @@ public class PlayerTwoEvents : MonoBehaviour
 				//	GamePad.SetVibration (0, 1, 1);
 			StartCoroutine (SwingAxe ());
 			
-			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
+			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) ||
+			    !nearbyFlower.state.Equals (Flower.FlowerState.INVICIBLE)) {
 				anim.SetBool ("NearFlower", true);
 			}
 			break;

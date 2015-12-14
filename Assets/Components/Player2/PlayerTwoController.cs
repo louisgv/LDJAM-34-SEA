@@ -11,10 +11,12 @@ public class PlayerTwoController : MonoBehaviour
 	public float
 		movementSpeed = 27.0f;
 
+	private PlayerTwoSounds playertwosounds;
 	private PlayerTwoEvents playerTwoEvents;
 
 	public void Awake ()
 	{
+		playertwosounds = GetComponent<PlayerTwoSounds>();
 		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
 	}
 
@@ -34,7 +36,7 @@ public class PlayerTwoController : MonoBehaviour
 				movementSpeed * 
 				Time.smoothDeltaTime
 				);
-		}
+	}
 //		transform.rotation = Quaternion.Euler (
 //			transform.rotation.eulerAngles + 
 //			input * Time.smoothDeltaTime * rotationSpeed);
