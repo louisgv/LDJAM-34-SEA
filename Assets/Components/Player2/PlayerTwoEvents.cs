@@ -63,7 +63,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			yield return new WaitForSeconds (0.3f);
 		}
 		// respawn of player beginning to start playing again. And then laugh
-
+		//player will start playing with sound
 		playertwosounds.tauntingYou();
 		yield return new WaitForSeconds (0.3f);
 		state = PlayerState.PLAYING;

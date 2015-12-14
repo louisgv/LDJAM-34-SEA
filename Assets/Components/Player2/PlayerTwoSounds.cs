@@ -10,12 +10,27 @@ public class PlayerTwoSounds : MonoBehaviour
 	public AudioClip[] notBadCutting;
 	public AudioClip[] onSuccess;
 	public AudioClip[] taunting;
+	public AudioClip[] swingHit;
+	public AudioClip[] swingMiss;
+	public AudioClip[] flowerGrows;
+	public AudioClip[] footStepsGround;
+	public AudioClip[] footStepsWater;
+	public AudioClip[] footStepsWood;
+	public AudioClip[] slingNoise;
 
-
-	void Start ()
+void Start ()
 	{
 		mySource = GetComponent<AudioSource> ();
 	}
+
+
+	public void Swinghit () {
+		
+		mySource.clip = swingHit [0];
+		mySource.Play ();
+	
+	}
+
 
 	public void Startlaugh() 
 	{
@@ -58,4 +73,41 @@ public class PlayerTwoSounds : MonoBehaviour
 		mySource.clip = taunting [soundIndex];
 		mySource.Play ();
 	}
+
+	public void swingAndMiss() 
+	{
+		mySource.clip = swingMiss [0];
+		mySource.Play ();
+	}
+	public void blossom () {
+		int soundIndex = Random.Range (0, flowerGrows.Length);
+		mySource.clip = flowerGrows [soundIndex];
+		mySource.Play ();
+	}
+
+	public void walkingGround() 
+	{
+		mySource.clip = footStepsGround [0];
+		mySource.Play ();
+	}
+
+
+	public void walkingWater() 
+	{
+		mySource.clip = footStepsWater [0];
+		mySource.Play ();
+	}
+
+	public void walkingWood() 
+	{
+		mySource.clip = footStepsWood [0];
+		mySource.Play ();
+	}
+
+	public void slingShot() 
+	{
+		mySource.clip = slingNoise[0];
+		mySource.Play ();
+	}
+
 }
