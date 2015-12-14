@@ -85,15 +85,15 @@ public class SteamVRPlayerScript : MonoBehaviour {
 				}
 			}*/
 
-		if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetTouchDown (EVRButtonId.k_EButton_Axis0)) {
+		if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPressDown (EVRButtonId.k_EButton_Axis0)) {
 				newSeed = (GameObject)GameObject.Instantiate(seedPrefab, controllerLeftSlingshot.transform.position, Quaternion.identity);
 				newSeed.GetComponent<Rigidbody> ().isKinematic = true;
 				Debug.Log ("B1" + " touch down" +  SteamVR_Controller.Input (0).transform.pos.ToString());
 			}
-		if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetTouch (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
+		else if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPress (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
 				newSeed.transform.position = controllerRightLoader.transform.position;
 			}
-		if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetTouchUp (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
+		else if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPressUp (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
 				//* if time alive less than 1 second detroy.
 				if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
 					Destroy (newSeed);
@@ -105,6 +105,18 @@ public class SteamVRPlayerScript : MonoBehaviour {
 				}
 
 			}
+		else if (newSeed != null) {
+			//* if time alive less than 1 second detroy.
+			if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
+				Destroy (newSeed);
+			} else {
+				newSeed.GetComponent<Rigidbody> ().isKinematic = false;
+				newSeed.GetComponent<Rigidbody> ().AddForce ((controllerLeftSlingshot.transform.position - controllerRightLoader.transform.position + nudgeVector) * shootPower);
+
+				newSeed = null;
+			}
+
+		}
 		//}
 	}
 }

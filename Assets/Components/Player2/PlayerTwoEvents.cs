@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
@@ -14,7 +14,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	private const int JOINT_COUNT = 3;
 	
 	public float timer = 3.0f;
-	
+
 	public enum PlayerState
 	{
 		PLAYING,
@@ -24,7 +24,7 @@ public class PlayerTwoEvents : MonoBehaviour
 		STUNNED,
 		DEAD
 	}
-	
+
 	public void Awake ()
 	{
 		anim = GetComponent<Animator> ();
@@ -44,7 +44,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		state = PlayerState.STUNNED;
 		
-		for (int i =0; i < 3; ++i) {
+		for (int i = 0; i < 3; ++i) {
 			GamePad.SetVibration (0, 1, 1);
 			yield return new WaitForSeconds (0.5f);
 		
@@ -53,9 +53,9 @@ public class PlayerTwoEvents : MonoBehaviour
 		}
 		state = PlayerState.PLAYING;
 	}
-	
+
 	private Flower nearbyFlower;
-	
+
 	void OnTriggerEnter (Collider collider)
 	{
 		if (collider.CompareTag ("Seed")) {
@@ -69,7 +69,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			nearbyFlower = collider.gameObject.GetComponent<Flower> ();
 		}
 	}
-	
+
 	void OnTriggerExit (Collider collider)
 	{
 		if (collider.CompareTag ("Flower")) {
@@ -77,7 +77,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			state = PlayerState.PLAYING;
 		}
 	}
-	
+
 	IEnumerator SwingAxe ()
 	{
 		anim.SetTrigger ("SwingAxe");
@@ -102,7 +102,9 @@ public class PlayerTwoEvents : MonoBehaviour
 		yield return new WaitForSeconds (1.0f);
 		state = PlayerState.PLAYING;
 	}
-		
+
+	public int playerIndex = 2;
+
 	void Update ()
 	{		
 		switch (state) {
@@ -119,7 +121,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			}
 			break;
 		case PlayerState.DRAGGING:
-			GamePad.SetVibration (0, Input.GetAxis ("P2.Vertical"), Input.GetAxis ("P2.Vertical"));
+			GamePad.SetVibration (0, Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical"), Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical"));
 			
 			break;
 		case PlayerState.PLAYING:
@@ -130,6 +132,6 @@ public class PlayerTwoEvents : MonoBehaviour
 		default:
 			return;
 		}
-	}	
+	}
 }
 
