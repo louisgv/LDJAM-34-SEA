@@ -24,11 +24,10 @@ public class GameManager : MonoBehaviour
 		}
 		DontDestroyOnLoad (gameObject);
 	}
-	
+
 	public static void ToGameOver (int winner)
 	{
-		switch (winner) 
-		{
+		switch (winner) {
 		case 1: 
 			state = GameState.GAMEOVER_W1;
 			break;
@@ -42,14 +41,15 @@ public class GameManager : MonoBehaviour
 	}
 
 	public static void Restart ()
-	{
+	{	
 		Application.LoadLevel (Application.loadedLevel);
 	}
+
 	public void Update ()
 	{
 		if (
-			state.Equals(GameState.GAMEOVER_W1) || 
-			state.Equals(GameState.GAMEOVER_W2)) {
+			state.Equals (GameState.GAMEOVER_W1) ||
+			state.Equals (GameState.GAMEOVER_W2)) {
 			Time.timeScale = 0.0f;
 		}
 		if (Input.GetKeyDown (KeyCode.L)) {

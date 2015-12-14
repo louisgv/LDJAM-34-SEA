@@ -71,7 +71,7 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	private Flower nearbyFlower;
 	private BridgeMKII nearbyRamp;
-	
+
 	void OnTriggerEnter (Collider collider)
 	{
 		if (collider.CompareTag ("Seed")) {
@@ -104,7 +104,9 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	IEnumerator SwingAxe ()
 	{
-		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) && Input.GetButtonDown ("P2.Fire")) {
+		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) &&
+		    !nearbyFlower.state.Equals (Flower.FlowerState.INVICIBLE) &&
+		    Input.GetButtonDown ("P2.Fire")) {
 			
 			anim.SetTrigger ("SwingAxe");
 			yield return new WaitForSeconds (0.6f);
@@ -156,7 +158,8 @@ public class PlayerTwoEvents : MonoBehaviour
 				//	GamePad.SetVibration (0, 1, 1);
 			StartCoroutine (SwingAxe ());
 			
-			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
+			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) ||
+			    !nearbyFlower.state.Equals (Flower.FlowerState.INVICIBLE)) {
 				anim.SetBool ("NearFlower", true);
 			}
 			break;
