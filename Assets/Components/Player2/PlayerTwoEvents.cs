@@ -15,7 +15,10 @@ public class PlayerTwoEvents : MonoBehaviour
 	
 	public float timer = 3.0f;
 
+
+
 	public enum PlayerState
+
 	{
 		PLAYING,
 		NEAR_FLOWER,
@@ -26,8 +29,14 @@ public class PlayerTwoEvents : MonoBehaviour
 		DEAD
 	}
 
+	private PlayerTwoSounds playertwosounds;
+
 	public void Awake ()
+
 	{
+	
+		playertwosounds = GetComponent<PlayerTwoSounds> ();
+
 		anim = GetComponent<Animator> ();
 		
 		joints = new Queue<GameObject> ();
@@ -48,7 +57,8 @@ public class PlayerTwoEvents : MonoBehaviour
 		for (int i = 0; i < 3; ++i) {
 			GamePad.SetVibration (0, 1, 1);
 			yield return new WaitForSeconds (0.5f);
-		
+			playertwosounds.GettingHit();
+
 			GamePad.SetVibration (0, 0, 0);
 			yield return new WaitForSeconds (0.3f);
 		}
