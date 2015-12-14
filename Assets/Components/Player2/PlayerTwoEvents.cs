@@ -29,13 +29,13 @@ public class PlayerTwoEvents : MonoBehaviour
 		DEAD
 	}
 
-	private PlayerTwoSounds playertwosounds;
+	private PlayerTwoSounds playerTwoSounds;
 
 	public void Awake ()
 
 	{
 	
-		playertwosounds = GetComponent<PlayerTwoSounds> ();
+		playerTwoSounds = GetComponent<PlayerTwoSounds> ();
 
 		anim = GetComponent<Animator> ();
 		
@@ -57,14 +57,14 @@ public class PlayerTwoEvents : MonoBehaviour
 		for (int i = 0; i < 3; ++i) {
 			GamePad.SetVibration (0, 1, 1);
 			yield return new WaitForSeconds (0.5f);
-			playertwosounds.GettingHit();
+			playerTwoSounds.GettingHit();
 
 			GamePad.SetVibration (0, 0, 0);
 			yield return new WaitForSeconds (0.3f);
 		}
 		// respawn of player beginning to start playing again. And then laugh
 		//player will start playing with sound
-		playertwosounds.tauntingYou();
+		playerTwoSounds.tauntingYou();
 		yield return new WaitForSeconds (0.3f);
 		state = PlayerState.PLAYING;
 	}

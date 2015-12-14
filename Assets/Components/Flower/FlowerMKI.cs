@@ -3,6 +3,14 @@ using System.Collections;
 
 public class FlowerMKI : Flower
 {
+
+
+	private FlowerSound flowerSounds;
+
+	public void Awake() {
+		flowerSounds = GetComponent<PlayerTwoSounds>();	
+	
+	}
 	
 	[Range(0.001f,0.1f)]
 	public float
@@ -14,6 +22,7 @@ public class FlowerMKI : Flower
 		// Grow the block
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
+			flowerSounds.blossom ();
 		}
 	}
 	

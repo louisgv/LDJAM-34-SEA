@@ -4,20 +4,43 @@ using System.Collections;
 public class FlowerSound : MonoBehaviour {
 
 	public AudioSource mySource;
+	public AudioClip[] flowerGrows;
+	public AudioClip[] footStepsGround;
+	public AudioClip[] footStepsWater;
+	public AudioClip[] footStepsWood;
 
-	public AudioClip[] sounds;
 
 	// Use this for initialization
-	void Start() {
+	void Start() 
+	{
 		mySource = GetComponent<AudioSource> ();
 	
 	}
 
-	void Flowergrown() {
-		mySource.clip = sounds[0];
-		mySource.Play();
-	}
-	
-	// Update is called once per frame
 
+	public void blossom ()
+	{
+		int soundIndex = Random.Range (0, flowerGrows.Length);
+		mySource.clip = flowerGrows [soundIndex];
+		mySource.Play ();
+	}
+
+	public void walkingGround() 
+	{
+		mySource.clip = footStepsGround [0];
+		mySource.Play ();
+	}
+
+
+	public void walkingWater() 
+	{
+		mySource.clip = footStepsWater [0];
+		mySource.Play ();
+	}
+
+	public void walkingWood() 
+	{
+		mySource.clip = footStepsWood [0];
+		mySource.Play ();
+	}
 }
