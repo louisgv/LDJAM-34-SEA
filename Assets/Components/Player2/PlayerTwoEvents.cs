@@ -78,25 +78,6 @@ public class PlayerTwoEvents : MonoBehaviour
 		}
 	}
 	
-	void ShowIndicator ()
-	{
-		if (state.Equals (PlayerState.NEAR_FLOWER) && 
-			!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
-			actionIndicator.localPosition = Vector3.Lerp (
-				actionIndicator.localPosition,
-				Vector3.up * 2.0f - Vector3.forward * 3.0f,
-				Time.deltaTime * 10.0f);
-		} else {
-			if (Mathf.Floor (actionIndicator.position.magnitude) == 0) {
-				return;
-			}
-			actionIndicator.localPosition = Vector3.Lerp (
-				actionIndicator.localPosition, 
-				Vector3.zero,
-				Time.deltaTime * 10.0f);
-		}
-	}
-	
 	IEnumerator SwingAxe ()
 	{
 		anim.SetTrigger ("SwingAxe");
@@ -123,9 +104,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	}
 		
 	void Update ()
-	{
-		ShowIndicator ();
-		
+	{		
 		switch (state) {
 		case PlayerState.STUNNED:
 			break;
@@ -135,6 +114,9 @@ public class PlayerTwoEvents : MonoBehaviour
 				//	GamePad.SetVibration (0, 1, 1);
 				StartCoroutine (SwingAxe ());
 			}
+			if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED)) {
+				anim.SetBool ("NearFlower", true);
+			}
 			break;
 		case PlayerState.DRAGGING:
 			GamePad.SetVibration (0, Input.GetAxis ("P2.Vertical"), Input.GetAxis ("P2.Vertical"));
@@ -142,9 +124,10 @@ public class PlayerTwoEvents : MonoBehaviour
 			break;
 		case PlayerState.PLAYING:
 			GamePad.SetVibration (0, 0, 0);
+			
+			anim.SetBool ("NearFlower", false);
 			break;
 		default:
-			
 			return;
 		}
 	}	
