@@ -8,7 +8,7 @@ public class FlowerMKII : Flower
 	private FlowerSound flowerSounds;
 
 	public void Awake() {
-		flowerSounds = GetComponent<PlayerTwoSounds>();	
+		flowerSounds = GetComponent<FlowerSound>();	
 
 	}
 

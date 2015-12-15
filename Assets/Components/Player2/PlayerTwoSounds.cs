@@ -78,13 +78,6 @@ void Start ()
 		mySource.clip = swingMiss [0];
 		mySource.Play ();
 	}
-
-	public void slingShot() 
-	{
-		mySource.clip = slingNoise [0];
-		mySource.Play ();
-	}
-
 	public void walkingGround() 
 	{
 		mySource.clip = footStepsGround [0];
