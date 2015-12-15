@@ -32,13 +32,11 @@ public class PlayerTwoEvents : MonoBehaviour
 
 	public void Awake ()
 	{
-	
 		playerTwoSounds = GetComponent<PlayerTwoSounds> ();
 
 		anim = GetComponent<Animator> ();
 		
 		joints = new Queue<GameObject> ();
-
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -85,6 +83,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			nearbyFlower = collider.gameObject.GetComponent<Flower> ();
 		}
 		if (collider.CompareTag ("Ramp")) {
+			playerTwoSounds.StartLaugh ();
 			state = PlayerState.NEAR_RAMP;
 			nearbyRamp = collider.gameObject.GetComponent<BridgeMKII> ();
 		}
