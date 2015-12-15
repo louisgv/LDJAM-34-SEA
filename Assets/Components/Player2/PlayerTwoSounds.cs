@@ -23,7 +23,7 @@ public class PlayerTwoSounds : MonoBehaviour
 	}
 
 
-	public void Swinghit ()
+	public void SwingHit ()
 	{
 		
 		mySource.clip = swingHit [0];
@@ -32,14 +32,14 @@ public class PlayerTwoSounds : MonoBehaviour
 	}
 
 
-	public void Startlaugh ()
+	public void StartLaugh ()
 	{
 		int soundIndex = Random.Range (0, startingLaugh.Length);
 		mySource.clip = startingLaugh [soundIndex];
 		mySource.Play ();
 	}
 
-	public void Swinggrunt ()
+	public void SwingGrunt ()
 	{
 		int soundIndex = Random.Range (0, gruntSwingArray.Length);
 		mySource.clip = gruntSwingArray [soundIndex];
@@ -57,11 +57,10 @@ public class PlayerTwoSounds : MonoBehaviour
 	{
 		int soundIndex = Random.Range (0, notBadCutting.Length);
 		mySource.clip = ouchArray [soundIndex];
-		mySource.Play ();	
-				
+		mySource.Play ();
 	}
 
-	public	void successfulCut ()
+	public void successfulCut ()
 	{
 		int soundIndex = Random.Range (0, onSuccess.Length);
 		mySource.clip = onSuccess [soundIndex];
