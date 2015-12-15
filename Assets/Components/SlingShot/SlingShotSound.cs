@@ -7,7 +7,6 @@ public class SlingShotSound : MonoBehaviour {
 	public AudioClip[] slingNoise;
 	public AudioSource mySource;
 
-
 	void Start () {
 		mySource = GetComponent<AudioSource> ();
 	}

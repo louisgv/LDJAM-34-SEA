@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerTwoController : MonoBehaviour
 {
-	[Range (0.0f, 63.0f)]
+	//[Range (0.0f, 63.0f)]
 	public float
 		rotationSpeed = 27.0f;
 	

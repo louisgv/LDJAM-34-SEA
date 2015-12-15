@@ -47,7 +47,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	//type of myState is PlayerState.playing
 	public PlayerState state = PlayerState.PLAYING;
 
-
+	public float explodePower = 50f;
 	// Use this for initialization
 	
 	IEnumerator BeStunned ()
@@ -59,7 +59,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			yield return new WaitForSeconds (0.5f);
 
 			playerTwoSounds.GettingHit ();
-
+			//GetComponent<Rigidbody> ().AddForce (transform.up * explodePower);
 			GamePad.SetVibration (0, 0, 0);
 			yield return new WaitForSeconds (0.3f);
 		}
@@ -78,6 +78,7 @@ public class PlayerTwoEvents : MonoBehaviour
 	{
 		if (collider.CompareTag ("Seed")) {
 			//here goes the co-routine
+			//playerTwoSounds.
 			StartCoroutine (BeStunned ());
 			Destroy (collider.gameObject);
 		}
@@ -87,7 +88,7 @@ public class PlayerTwoEvents : MonoBehaviour
 			nearbyFlower = collider.gameObject.GetComponent<Flower> ();
 		}
 		if (collider.CompareTag ("Ramp")) {
-			playerTwoSounds.StartLaugh ();
+			playerTwoSounds.successfulCut ();
 			state = PlayerState.NEAR_RAMP;
 			nearbyRamp = collider.gameObject.GetComponent<BridgeMKII> ();
 		}
@@ -110,7 +111,8 @@ public class PlayerTwoEvents : MonoBehaviour
 		if (!nearbyFlower.state.Equals (Flower.FlowerState.CHOPPED) &&
 		    !nearbyFlower.state.Equals (Flower.FlowerState.INVICIBLE) &&
 		    Input.GetButtonDown ("P2.Fire")) {
-			
+
+			//playerTwoSounds.
 			anim.SetTrigger ("SwingAxe");
 			yield return new WaitForSeconds (0.6f);
 			GamePad.SetVibration (0, 1, 1);
