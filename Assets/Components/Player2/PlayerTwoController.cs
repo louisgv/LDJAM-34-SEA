@@ -3,11 +3,11 @@ using System.Collections;
 
 public class PlayerTwoController : MonoBehaviour
 {
-	[Range(0.0f, 45.0f)]
+	[Range (0.0f, 63.0f)]
 	public float
 		rotationSpeed = 27.0f;
 	
-	[Range(0.0f, 45.0f)]
+	[Range (0.0f, 63.0f)]
 	public float
 		movementSpeed = 27.0f;
 
@@ -16,7 +16,7 @@ public class PlayerTwoController : MonoBehaviour
 
 	public void Awake ()
 	{
-		playerTwoSounds = GetComponent<PlayerTwoSounds>();
+		playerTwoSounds = GetComponent<PlayerTwoSounds> ();
 		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
 	}
 
@@ -27,16 +27,16 @@ public class PlayerTwoController : MonoBehaviour
 	{
 		
 		if (!playerTwoEvents.state.Equals (PlayerTwoEvents.PlayerState.STUNNED)) {
-			Vector3 input = new Vector3 (0, Input.GetAxis ("P"+playerIndex.ToString()+".Horizontal"), 0);
+			Vector3 input = new Vector3 (0, Input.GetAxis ("P" + playerIndex.ToString () + ".Horizontal"), 0);
 			transform.Rotate (input * rotationSpeed * Time.smoothDeltaTime);
 		
 			transform.position -= (	
-				transform.forward * 
-				Input.GetAxis ("P"+playerIndex.ToString()+".Vertical") * 
-				movementSpeed * 
-				Time.smoothDeltaTime
-				);
-	}
+			    transform.forward *
+			    Input.GetAxis ("P" + playerIndex.ToString () + ".Vertical") *
+			    movementSpeed *
+			    Time.smoothDeltaTime
+			);
+		}
 //		transform.rotation = Quaternion.Euler (
 //			transform.rotation.eulerAngles + 
 //			input * Time.smoothDeltaTime * rotationSpeed);

@@ -8,11 +8,10 @@ public class FlowerMKI : Flower
 	private FlowerSound flowerSounds;
 
 	public void Awake() {
-		flowerSounds = GetComponent<FlowerSound>();	
-	
+		flowerSounds = GetComponent<FlowerSound> ();	
 	}
-	
-	[Range(0.001f,0.1f)]
+
+	[Range (0.001f, 0.1f)]
 	public float
 		prefabGrowthSpeed = 0.01f;
 	
@@ -24,7 +23,7 @@ public class FlowerMKI : Flower
 			Grow ();
 		}
 	}
-	
+
 	new void Grow ()
 	{
 		base.Grow ();

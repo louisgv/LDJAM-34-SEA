@@ -9,13 +9,16 @@ public class BridgeMKII : Bridge
 		buildProgress = 0;
 		pieceInstances = new GameObject [BUILD_MAX];
 	}
-	
+
+	public static int bridgeBuilt = 0;
+
+	//HACK: Change this variable for winning condition for P2
+
+	public static int bridgeWinningCondition = 1;
+
 	public new void BuildBridge ()
 	{
-		if (buildProgress == BUILD_MAX) {
-			GameManager.ToGameOver (2);
-			return;
-		}
+		
 		// NOTE: Change the Forward Vector to whatever direction for future reference
 		pieceInstances [buildProgress] = Instantiate (piecePrefab) as GameObject;
 
@@ -28,6 +31,14 @@ public class BridgeMKII : Bridge
 		pieceInstances [buildProgress].transform.localPosition -= Vector3.forward * (float)buildProgress * 3.0f;
 		
 		buildProgress++;
+
+		if (buildProgress == BUILD_MAX) {
+			state = BridgeState.FINISHED;
+			++bridgeBuilt;
+			if (bridgeBuilt == bridgeWinningCondition) {
+				GameManager.ToGameOver (2);
+			}
+		}
 	}
 	
 }

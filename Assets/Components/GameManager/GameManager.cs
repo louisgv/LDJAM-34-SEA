@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 			Destroy (gameObject);
 		}
 		DontDestroyOnLoad (gameObject);
+		state = GameState.GAMEON;
 	}
 
 	public static void ToGameOver (int winner)
@@ -41,7 +42,8 @@ public class GameManager : MonoBehaviour
 	}
 
 	public static void Restart ()
-	{	
+	{
+		state = GameState.GAMEON;
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
@@ -51,6 +53,9 @@ public class GameManager : MonoBehaviour
 			state.Equals (GameState.GAMEOVER_W1) ||
 			state.Equals (GameState.GAMEOVER_W2)) {
 			Time.timeScale = 0.0f;
+		}
+		if (state.Equals (GameState.GAMEON)) {
+			Time.timeScale = 1.0f;
 		}
 		if (Input.GetKeyDown (KeyCode.L)) {
 			Restart ();
