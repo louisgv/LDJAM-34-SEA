@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
 		GAMEON
 	}
 
+
+	void Start() {
+		
+	}
+
 	public static GameState state = GameState.GAMEON;
 	// Use this for initialization
 	void Awake ()
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour
 	{
 		state = GameState.GAMEON;
 		Application.LoadLevel (Application.loadedLevel);
+	
 	}
 
 	public void Update ()
