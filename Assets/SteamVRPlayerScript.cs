@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class SteamVRPlayerScript : MonoBehaviour
 {
+	public AudioSource audioS;
 
 	public SteamVR_TrackedObject controllerLeftSlingshot;
 	public SteamVR_TrackedObject controllerRightLoader;
@@ -129,7 +130,7 @@ public class SteamVRPlayerScript : MonoBehaviour
 				    controllerLeftSlingshot.transform.position -
 				    controllerRightLoader.transform.position + nudgeVector)
 				* shootPower);
-				
+				audioS.Play ();
 				newSeed = null;
 			}
 
@@ -147,6 +148,7 @@ public class SteamVRPlayerScript : MonoBehaviour
 				* shootPower
 				);
 				newSeed = null;
+				audioS.Play ();
 			}
 
 			rubber.SetPosition (1, slingPoint2.position);

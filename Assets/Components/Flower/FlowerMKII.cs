@@ -17,6 +17,11 @@ public class FlowerMKII : Flower
 	public float
 		prefabGrowthSpeed = 0.1f;
 
+	public void OnEnable ()
+	{
+		flowerSounds.blossom ();
+	}
+
 	void Start ()
 	{
 		transform.localScale = Vector3.zero;
@@ -28,7 +33,6 @@ public class FlowerMKII : Flower
 		// Grow the block
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
-			flowerSounds.blossom ();
 		}
 
 
