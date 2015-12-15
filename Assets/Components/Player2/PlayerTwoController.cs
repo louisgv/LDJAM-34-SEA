@@ -11,12 +11,12 @@ public class PlayerTwoController : MonoBehaviour
 	public float
 		movementSpeed = 27.0f;
 
-	private PlayerTwoSounds playertwosounds;
+	private PlayerTwoSounds playerTwoSounds;
 	private PlayerTwoEvents playerTwoEvents;
 
 	public void Awake ()
 	{
-		playertwosounds = GetComponent<PlayerTwoSounds>();
+		playerTwoSounds = GetComponent<PlayerTwoSounds>();
 		playerTwoEvents = GetComponent<PlayerTwoEvents> ();
 	}
 

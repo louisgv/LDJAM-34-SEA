@@ -22,13 +22,13 @@ public class FlowerMKI : Flower
 		// Grow the block
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
-			flowerSounds.blossom ();
 		}
 	}
 	
 	new void Grow ()
 	{
 		base.Grow ();
+		flowerSounds.blossom ();
 		transform.localScale += Vector3.up * growthProgress * prefabGrowthSpeed;
 	}
 }

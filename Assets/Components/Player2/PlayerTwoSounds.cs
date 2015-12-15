@@ -12,7 +12,6 @@ public class PlayerTwoSounds : MonoBehaviour
 	public AudioClip[] taunting;
 	public AudioClip[] swingHit;
 	public AudioClip[] swingMiss;
-	public AudioClip[] slingNoise;
 	public AudioClip[] footStepsGround;
 	public AudioClip[] footStepsWater;
 	public AudioClip[] footStepsWood;

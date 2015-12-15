@@ -29,6 +29,8 @@ public class FlowerMKII : Flower
 			Grow ();
 			flowerSounds.blossom ();
 		}
+
+
 		if (state.Equals (FlowerState.CHOPPED)) {
 
 
