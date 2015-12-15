@@ -7,8 +7,9 @@ public class FlowerMKII : Flower
 
 	private FlowerSound flowerSounds;
 
-	public void Awake() {
-		flowerSounds = GetComponent<FlowerSound>();	
+	public void Awake ()
+	{
+		flowerSounds = GetComponent<FlowerSound> ();	
 
 	}
 
@@ -33,8 +34,7 @@ public class FlowerMKII : Flower
 
 		if (state.Equals (FlowerState.CHOPPED)) {
 
-
-
+			gameObject.layer = 8;
 
 
 			// Disable Trigger

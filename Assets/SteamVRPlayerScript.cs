@@ -59,22 +59,24 @@ public class SteamVRPlayerScript : MonoBehaviour
 		SteamVR_Utils.Event.Remove ("device_connected", OnDeviceConnected);
 	}
 
+	public Material rubberMaterial;
+
 	// Use this for initialization
 	void Start ()
 	{
 		// TODO: REPLACE THIS WITH PUBLIC UNITY OBJECT
 		LineRenderer rubber = gameObject.AddComponent<LineRenderer> ();
 
-		rubber.material = new Material (Shader.Find ("Particles/Additive"));
+		rubber.material = rubberMaterial;
 
-		rubber.SetWidth (0.005F, 0.005F);
+		rubber.SetWidth (0.009F, 0.009F);
 
-		rubber.SetColors (Color.black, Color.black);
+		//rubber.SetColors (Color.white, Color.white);
 
 		rubber.SetVertexCount (3);
 
 		rubber.SetPosition (0, slingPoint1.position);
-		rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+		rubber.SetPosition (1, slingPoint2.position);
 		rubber.SetPosition (2, slingPoint2.position);
 	}
 
@@ -116,6 +118,7 @@ public class SteamVRPlayerScript : MonoBehaviour
 			// Link SlingPoint1's position with newSeed's position with SlingPOint2's position
 
 			rubber.SetPosition (1, newSeed.transform.position); 
+
 		} else if (SteamVR_Controller.Input ((int)controllerRightLoader.index).GetPressUp (EVRButtonId.k_EButton_Axis0) && newSeed != null) {
 			//* if time alive less than 1 second detroy.
 			if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
@@ -129,7 +132,9 @@ public class SteamVRPlayerScript : MonoBehaviour
 				
 				newSeed = null;
 			}
-			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+
+			rubber.SetPosition (1, slingPoint2.position);
+		
 		} else if (newSeed != null) {
 			//* if time alive less than 1 second detroy.
 			if (newSeed.GetComponent<SeedScript> ().LifeTimer < 0.5f) {
@@ -143,9 +148,12 @@ public class SteamVRPlayerScript : MonoBehaviour
 				);
 				newSeed = null;
 			}
-			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+
+			rubber.SetPosition (1, slingPoint2.position);
+
 		} else {
-			rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+			//rubber.SetPosition (1, controllerLeftSlingshot.transform.position); 
+			rubber.SetPosition (1, slingPoint2.position);
 		}
 		rubber.SetPosition (0, slingPoint1.position);
 		rubber.SetPosition (2, slingPoint2.position);

@@ -14,7 +14,7 @@ public class BridgeMKII : Bridge
 
 	//HACK: Change this variable for winning condition for P2
 
-	public static int bridgeWinningCondition = 1;
+	public static int bridgeWinningCondition = 2;
 
 	public new void BuildBridge ()
 	{

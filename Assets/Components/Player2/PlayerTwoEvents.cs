@@ -10,7 +10,9 @@ public class PlayerTwoEvents : MonoBehaviour
 	private Animator anim;
 
 	public Queue<GameObject> joints;
-	
+
+	//public JointSpring joint;
+
 	public int MAX_JOINT = 3;
 	
 	public float timer = 3.0f;
@@ -35,8 +37,10 @@ public class PlayerTwoEvents : MonoBehaviour
 		playerTwoSounds = GetComponent<PlayerTwoSounds> ();
 
 		anim = GetComponent<Animator> ();
-		
+
+		//joint = GetComponent<SpringJoint> ();
 		joints = new Queue<GameObject> ();
+
 	}
 	
 	//reffering to our enum PlayState value Playing
@@ -111,26 +115,25 @@ public class PlayerTwoEvents : MonoBehaviour
 			yield return new WaitForSeconds (0.6f);
 			GamePad.SetVibration (0, 1, 1);
 	
-			if (nearbyFlower != null && joints.Count <= MAX_JOINT && nearbyFlower.bridgable) {
+			if (nearbyFlower != null &&
+			    joints.Count <= MAX_JOINT) {
 				GameObject joint = new GameObject ("Joint " + joints.Count.ToString (), typeof(SpringJoint));
-			
+
 				joint.transform.SetParent (transform);
-			
-				joint.transform.localPosition = Vector3.zero;
-			
-				joints.Enqueue (joint);
-			
-				joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
-			
+
 				joint.GetComponent<Rigidbody> ().isKinematic = true;
-			
+
+				joint.transform.localPosition = Vector3.zero;
+
+				joint.GetComponent<SpringJoint> ().connectedBody = nearbyFlower.GetComponent<Rigidbody> ();
+
+				joints.Enqueue (joint);
+
 				nearbyFlower.BeChopped ();
 
 				state = PlayerState.DRAGGING;
-			} else {
-				nearbyFlower.BeChopped ();
-			}
-			nearbyFlower = null;
+			} 
+			//nearbyFlower = null;
 				
 			yield return new WaitForSeconds (1.0f);
 			if (state != PlayerState.DRAGGING) {
@@ -154,13 +157,13 @@ public class PlayerTwoEvents : MonoBehaviour
 				if (Input.GetButtonDown ("P2.Fire")) {
 					nearbyRamp.BuildBridge ();
 					GameObject joint = joints.Dequeue ();
-					if (joint.GetComponent<SpringJoint> ().connectedBody.gameObject != null) {
-						Destroy (joint.GetComponent<SpringJoint> ().connectedBody.gameObject);
-					}
+					Destroy (joint.GetComponent<SpringJoint> ().connectedBody.gameObject);
 					Destroy (joint);
+
 					if (joints.Count == 0) {
 						state = PlayerState.PLAYING;
 					}
+
 					anim.SetBool ("BuildBridge", false);
 				}
 			}

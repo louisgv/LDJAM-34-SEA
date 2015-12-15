@@ -34,7 +34,7 @@ public class Flower : MonoBehaviour
 
 	public FlowerState state = FlowerState.IS_GROWING;
 
-	void Awake ()
+	void Start ()
 	{
 		rigidBody = GetComponent<Rigidbody> ();
 		bCollider = GetComponent<BoxCollider> ();
@@ -42,20 +42,23 @@ public class Flower : MonoBehaviour
 
 	public void BeChopped ()
 	{
-		if (growthProgress < growthForBridge) {
-			Destroy (this.gameObject);
-			return;
-		}
 		state = FlowerState.CHOPPED;
 
-		gameObject.layer = 8;
+		//if (growthProgress < growthForBridge) {
+		//Destroy (gameObject);
+		//	return;
+		//}
+
+		//state = FlowerState.CHOPPED;
+		rigidBody = GetComponent<Rigidbody> ();
 
 		rigidBody.isKinematic = false;
 		
 		bCollider.isTrigger = false;
-		
+
 		rigidBody.AddForce (Vector3.up * 1800f);
-		
+
+
 	}
 
 	void BeFullGrown ()
@@ -74,8 +77,11 @@ public class Flower : MonoBehaviour
 	{
 		// transform.localScale *= 1.8f;
 		GameObject counter = new GameObject ("Counter", typeof(TextMesh));
+
 		counter.transform.SetParent (transform);
+
 		counter.transform.localPosition = Vector3.up * 15.0f;	
+
 		TextMesh counterText = counter.GetComponent<TextMesh> ();
 
 		counterText.characterSize = 3;
@@ -124,7 +130,7 @@ public class Flower : MonoBehaviour
 		}
 	}
 
-	public bool bridgable;
+	//public bool bridgable;
 
 	protected void Grow ()
 	{
@@ -132,7 +138,7 @@ public class Flower : MonoBehaviour
 			BeFullGrown ();
 			return;
 		}
-		bridgable = growthProgress > growthForBridge;
+		//bridgable = true;
 
 		growthProgress += Time.deltaTime * growthSpeed;
 	}
