@@ -9,24 +9,24 @@ public class Bridge : MonoBehaviour
 	
 	protected GameObject[] pieceInstances;
 	
-	[Range(3,9)]
-	public static int
+	[Range (3, 9)]
+	public int
 		BUILD_MAX = 3;
 	
 	public int buildProgress;
-	
+
 	public enum BridgeState
 	{
 		FINISHED,
 		UNFINISHED
 	}
-	
+
 	public void Awake ()
 	{
 		buildProgress = 0;
 		pieceInstances = new GameObject [BUILD_MAX];
 	}
-	
+
 	public BridgeState state = BridgeState.UNFINISHED;
 	
 	// There's only one bridge anyhow?

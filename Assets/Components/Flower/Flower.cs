@@ -11,11 +11,13 @@ public class Flower : MonoBehaviour
 	
 	public float growthForBridge = 4.5f;
 	
-	[Range (1, 10)]
+	[Range (0, 1f)]
 	public float
 		growthSpeed = 1f;
 
 	public static int flowerCount = 0;
+	// HACK: Change this to winning condition for P1
+	public static int flowerWinningCondition = 5;
 
 	private Rigidbody rigidBody;
 	
@@ -66,19 +68,35 @@ public class Flower : MonoBehaviour
 		StartCoroutine (CountDownToInvicible ());
 	}
 
+	public int INVICIBLE_TIME = 5;
+
 	IEnumerator CountDownToInvicible ()
 	{
-		transform.localScale *= 1.8f;
-		yield return new WaitForSeconds (5.0f);
+		// transform.localScale *= 1.8f;
+		GameObject counter = new GameObject ("Counter", typeof(TextMesh));
+		counter.transform.SetParent (transform);
+		counter.transform.localPosition = Vector3.up * 15.0f;	
+		TextMesh counterText = counter.GetComponent<TextMesh> ();
+
+		counterText.characterSize = 3;
+
+		counterText.anchor = TextAnchor.MiddleCenter;
+		counterText.alignment = TextAlignment.Center;
+		counterText.color = Color.white;
+		counterText.fontSize = 200;
+
+		for (int i = INVICIBLE_TIME; i >= 0; --i) {
+			yield return new WaitForSeconds (1.0f);
+			counterText.text = i.ToString ();
+		}
+		Destroy (counter);
 		BeInvicible ();
 	}
-
-	public int flowerWinningCondition = 5;
 
 	public void BeInvicible ()
 	{
 		state = FlowerState.INVICIBLE;
-		transform.localScale /= 1.8f;
+		//transform.localScale /= 1.8f;
 		flowerCount++;
 		if (flowerCount == flowerWinningCondition) {
 			GameManager.ToGameOver (1);
@@ -106,12 +124,16 @@ public class Flower : MonoBehaviour
 		}
 	}
 
+	public bool bridgable;
+
 	protected void Grow ()
 	{
 		if (growthProgress > GROW_MAX) {			
 			BeFullGrown ();
 			return;
 		}
+		bridgable = growthProgress > growthForBridge;
+
 		growthProgress += Time.deltaTime * growthSpeed;
 	}
 }
