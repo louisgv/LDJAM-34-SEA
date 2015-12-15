@@ -26,7 +26,7 @@ public class Loader : MonoBehaviour
 
 	void Update () {
 
-		GameMusic ();
+		//GameMusic ();
 
 
 	}
