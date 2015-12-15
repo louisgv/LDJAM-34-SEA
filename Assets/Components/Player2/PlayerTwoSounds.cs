@@ -12,19 +12,19 @@ public class PlayerTwoSounds : MonoBehaviour
 	public AudioClip[] taunting;
 	public AudioClip[] swingHit;
 	public AudioClip[] swingMiss;
-	public AudioClip[] flowerGrows;
 	public AudioClip[] footStepsGround;
 	public AudioClip[] footStepsWater;
 	public AudioClip[] footStepsWood;
-	public AudioClip[] slingNoise;
 
-void Start ()
+
+	void Start ()
 	{
 		mySource = GetComponent<AudioSource> ();
 	}
 
 
-	public void Swinghit () {
+	public void Swinghit ()
+	{
 		
 		mySource.clip = swingHit [0];
 		mySource.Play ();
@@ -32,81 +32,77 @@ void Start ()
 	}
 
 
-	public void Startlaugh() 
+	public void Startlaugh ()
 	{
 		int soundIndex = Random.Range (0, startingLaugh.Length);
-		mySource.clip = startingLaugh[soundIndex];
-		mySource.Play();
+		mySource.clip = startingLaugh [soundIndex];
+		mySource.Play ();
 	}
 
-	public void Swinggrunt() 
+	public void Swinggrunt ()
 	{
 		int soundIndex = Random.Range (0, gruntSwingArray.Length);
-		mySource.clip = gruntSwingArray[soundIndex];
-		mySource.Play();
+		mySource.clip = gruntSwingArray [soundIndex];
+		mySource.Play ();
 	}
 
-	public void GettingHit() 
+	public void GettingHit ()
 	{
 		int soundIndex = Random.Range (0, ouchArray.Length);
-		mySource.clip = ouchArray[soundIndex];
-		mySource.Play();	
+		mySource.clip = ouchArray [soundIndex];
+		mySource.Play ();	
 	}
 
-	public void inActOfCut () 
+	public void inActOfCut ()
 	{
 		int soundIndex = Random.Range (0, notBadCutting.Length);
-		mySource.clip = ouchArray[soundIndex];
-		mySource.Play();	
+		mySource.clip = ouchArray [soundIndex];
+		mySource.Play ();	
 				
 	}
 
-	public	void successfulCut () 
+	public	void successfulCut ()
 	{
 		int soundIndex = Random.Range (0, onSuccess.Length);
-		mySource.clip = onSuccess[soundIndex];
-		mySource.Play();	
+		mySource.clip = onSuccess [soundIndex];
+		mySource.Play ();	
 	}
 
-	public void tauntingYou() {
+	public void tauntingYou ()
+	{
 		int soundIndex = Random.Range (0, taunting.Length);
 		mySource.clip = taunting [soundIndex];
 		mySource.Play ();
 	}
 
-	public void swingAndMiss() 
+	public void swingAndMiss ()
 	{
 		mySource.clip = swingMiss [0];
 		mySource.Play ();
 	}
-	public void blossom () {
-		int soundIndex = Random.Range (0, flowerGrows.Length);
-		mySource.clip = flowerGrows [soundIndex];
+
+	public void slingShot ()
+	{
+		//mySource.clip = slingNoise [0];
 		mySource.Play ();
 	}
 
-	public void walkingGround() 
+	public void walkingGround ()
 	{
 		mySource.clip = footStepsGround [0];
 		mySource.Play ();
 	}
 
 
-	public void walkingWater() 
+	public void walkingWater ()
 	{
 		mySource.clip = footStepsWater [0];
 		mySource.Play ();
 	}
 
-	public void walkingWood() 
+	public void walkingWood ()
 	{
 		mySource.clip = footStepsWood [0];
-		mySource.Play ();
-	}
-
-	public void slingShot() 
-	{
-		mySource.clip = slingNoise[0];
 		mySource.Play ();
 	}
 

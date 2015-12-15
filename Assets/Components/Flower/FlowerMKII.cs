@@ -3,6 +3,15 @@ using System.Collections;
 
 public class FlowerMKII : Flower
 {
+
+
+	private FlowerSound flowerSounds;
+
+	public void Awake ()
+	{
+		flowerSounds = GetComponent<FlowerSound> ();	
+	}
+
 	[Range (0.1f, 1f)]
 	public float
 		prefabGrowthSpeed = 0.1f;
@@ -18,8 +27,16 @@ public class FlowerMKII : Flower
 		// Grow the block
 		if (state.Equals (FlowerState.IS_GROWING)) {
 			Grow ();
+			flowerSounds.blossom ();
 		}
+
+
 		if (state.Equals (FlowerState.CHOPPED)) {
+
+
+
+
+
 			// Disable Trigger
 			// Apply a force up
 			// Switch State to Draggable
